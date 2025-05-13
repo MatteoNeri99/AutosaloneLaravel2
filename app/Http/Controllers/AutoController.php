@@ -55,7 +55,7 @@ class AutoController extends Controller
     {
         // Validazione dei dati
         $data = $request->validate([
-            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Accetta più file
+            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'anno' => 'required|integer',
             'marca' => 'required|string|max:255',
             'modello' => 'required|string|max:255',
