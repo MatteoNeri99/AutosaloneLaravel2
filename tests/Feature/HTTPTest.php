@@ -76,7 +76,6 @@ class HTTPTest extends TestCase
         'modello' => 'Romeo',]);
 
 
-
         //controllo che la function update funzioni correttamente
         //campo modificato colore
         $this->put('/auto/1', [
@@ -102,6 +101,14 @@ class HTTPTest extends TestCase
         //controllo che il campo sia stato effettivamente modificato
         $this->assertDatabaseHas('autos', ['marca' => 'Alfa',
         'modello' => 'Romeo', 'colore'=>'nera']);
+
+
+        //controlla che la funzione di riccerca funzioni
+       $response = $this->get('auto/search?q=nuova')->assertStatus(200);
+       //controllo che nel HTML sia presente la parola 'nuova'
+       $response->assertSee('nuova');
+       //controllo che nel HTML non sia presente la parola 'usata'
+       $response->assertDontSee('usata');
 
     }
 }
