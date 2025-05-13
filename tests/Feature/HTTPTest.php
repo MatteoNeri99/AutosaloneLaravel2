@@ -10,5 +10,7 @@ class HTTPTest extends TestCase
 {
     public function HTTP_test(){
 
+        //controllo caricamento homepage
+       $this->get('/home')->assertStatus(200);
     }
 }
