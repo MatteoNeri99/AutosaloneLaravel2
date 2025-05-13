@@ -11,6 +11,11 @@ class Admin extends Model implements \Illuminate\Contracts\Auth\Authenticatable
     use AuthenticatableTrait;
     use HasFactory;
 
+    protected $fillable =[
+        'nome','email','password'
+
+    ];
+
 }
 
 

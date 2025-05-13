@@ -11,6 +11,9 @@ class HTTPTest extends TestCase
     //controllo caricamento page
     public function test_caricamento_page(){
 
+        $user = \App\Models\Admin::factory()->create();
+        $this->actingAs($user);
+
         //controllo caricamento homepage
        $this->get('/home')->assertStatus(200);
 
