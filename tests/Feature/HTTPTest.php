@@ -11,6 +11,7 @@ class HTTPTest extends TestCase
     //controllo caricamento page
     public function test_caricamento_page(){
 
+        //creo un profili fake per permettere l'accesso alle page
         $user = \App\Models\Admin::factory()->create();
         $this->actingAs($user);
 
@@ -38,13 +39,18 @@ class HTTPTest extends TestCase
 
     }
 
+
+
     // funzione per controllare function del AutoController
     public function test_function_AutoController(){
+
+        //disabilitato CSRF
+        $this->withoutMiddleware();
 
         //controllo inserimento di una nuova auto (store)
         $this->post('/auto', [
 
-             'anno' => '2000',
+            'anno' => '2000',
             'marca' => 'Alfa',
             'modello' => 'Romeo',
             'cilindrata' => '2000',
@@ -62,6 +68,40 @@ class HTTPTest extends TestCase
             'descrizione' => 'bella',
             'status' => 'disponibile',
 
-        ])->assertStatus(302);
+        ])->assertRedirect('/auto');
+
+
+        //controllo se l'auto inserita e presente nel databes
+        $this->assertDatabaseHas('autos', ['marca' => 'Alfa',
+        'modello' => 'Romeo',]);
+
+
+
+        //controllo che la function update funzioni correttamente
+        //campo modificato colore
+        $this->put('/auto/1', [
+            'anno' => '2000',
+            'marca' => 'Alfa',
+            'modello' => 'Romeo',
+            'cilindrata' => '2000',
+            'cavalli' => '200',
+            'emissioni' => 'nessuna',
+            'km' => '150000',
+            'colore' => 'nera',
+            'cambio' => 'automatico',
+            'posti' => '4',
+            'porte' => '4',
+            'prezzo' => '1500',
+            'nuova' => false ,
+            'tipologia_id' => 2,
+            'carburante_id' => 2,
+            'descrizione' => 'bella',
+            'status' => 'disponibile',
+        ])->assertRedirect('/auto');
+
+        //controllo che il campo sia stato effettivamente modificato
+        $this->assertDatabaseHas('autos', ['marca' => 'Alfa',
+        'modello' => 'Romeo', 'colore'=>'nera']);
+
     }
 }
