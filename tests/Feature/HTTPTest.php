@@ -8,7 +8,8 @@ use Tests\TestCase;
 
 class HTTPTest extends TestCase
 {
-    public function HTTP_test(){
+    //controllo caricamento page
+    public function test_caricamento_page(){
 
         //controllo caricamento homepage
        $this->get('/home')->assertStatus(200);
