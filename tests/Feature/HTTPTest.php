@@ -103,12 +103,22 @@ class HTTPTest extends TestCase
         'modello' => 'Romeo', 'colore'=>'nera']);
 
 
-        //controlla che la funzione di riccerca funzioni
+        //controlla che la funzione di ricerca funzioni (search)
        $response = $this->get('auto/search?q=nuova')->assertStatus(200);
        //controllo che nel HTML sia presente la parola 'nuova'
        $response->assertSee('nuova');
        //controllo che nel HTML non sia presente la parola 'usata'
        $response->assertDontSee('usata');
+
+
+
+       //controllo la funzione di soft delete
+       $this->delete('/auto/1')->assertStatus(302);
+       //controllo che sia stato effettivamente soft deleted
+       $this->assertSoftDeleted('autos', ['id' => 1]);
+       //controllo funzionamento di ripristino auto (restore)
+       $this->get('/cestino/ripristina/1')->assertStatus(302);
+
 
     }
 }
