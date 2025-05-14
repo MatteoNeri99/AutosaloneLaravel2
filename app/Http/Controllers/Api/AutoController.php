@@ -89,6 +89,8 @@ class AutoController extends Controller
     }
 
 
+
+
     public function show($id)
     {
         $auto = Auto::find($id);
@@ -108,6 +110,8 @@ class AutoController extends Controller
 
         return response()->json($auto, 200);
     }
+
+
 
     public function ultimeAuto()
     {
