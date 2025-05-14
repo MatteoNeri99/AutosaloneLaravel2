@@ -9,15 +9,17 @@ use Tests\TestCase;
 class HTTPTest extends TestCase
 {
 
-        // funzione per controllare function del AutoController
+    // funzione per controllare function del AutoController
     public function test_function_AutoController(){
+
+        //elimino tutti i record nella tabella autos
+        \App\Models\Auto::truncate();
 
         //disabilitato CSRF
         $this->withoutMiddleware();
 
         //controllo inserimento di una nuova auto (store)
         $this->post('/auto', [
-
             'anno' => '2000',
             'marca' => 'Alfa',
             'modello' => 'Romeo',
@@ -128,10 +130,18 @@ class HTTPTest extends TestCase
 
     public function test_forceDelete(){
 
+       //controllo la funzione di soft delete
+       $this->delete('/auto/1')->assertStatus(302);
+
+       //controllo che sia stato effettivamente soft deleted
+       $this->assertSoftDeleted('autos', ['id' => 1]);
+
         $this->get('/cestino/elimina/1')->assertStatus(302);
+
+        $this->assertDatabaseMissing('autos', ['id' => 1]);
     }
 
 
-
-
 }
+
+
