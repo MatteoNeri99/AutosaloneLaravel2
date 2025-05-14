@@ -13,7 +13,7 @@ class ApiTest extends TestCase
      */
     public function test_api_controller_function(): void
     {
-
+        //creo un'auto per avere un id dinamico per poter controllare il funzionamento delle funzioni API
        $auto= \App\Models\Auto::factory()->create();
 
         //controllo il funzionamento della function index e vedo se ritorna l'auto con id 1
@@ -23,7 +23,11 @@ class ApiTest extends TestCase
         $this->get("/api/auto/{$auto->id}")->assertStatus(200)->assertJson(['id'=>$auto->id]);
 
 
+        //creo 9 auto per poter controllare function ultimeAuto
+        \App\Models\Auto::factory(9)->create();
 
+        //controllo la funzione ultimeAuto e che ne siano 9
+        $this->get('/api/ultime-auto')->assertStatus(200)->assertJsonCount(9);
 
 
     }
