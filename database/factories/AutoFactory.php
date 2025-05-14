@@ -33,7 +33,7 @@ class AutoFactory extends Factory
             'tipologia_id' =>  \App\Models\Tipologia::inRandomOrder()->first()?->id,
             'carburante_id' => \App\Models\Carburante::inRandomOrder()->first()?->id,
             'descrizione' => $this->faker->text(100),
-            'status' => $this->fakerrandomElement(['euro3', 'euro5']),
+            'status' => $this->faker->randomElement(['nuova', 'usata']),
         ];
     }
 }

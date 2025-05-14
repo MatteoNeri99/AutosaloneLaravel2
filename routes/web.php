@@ -33,7 +33,7 @@ Route::middleware(['auth:admin'])->group(function () {
     })->name('admin.home');
 
     Route::get('/auto/search', [AutoController::class, 'search'])->name('auto.search');
-    Route::resource('/auto', AutoController::class);
+    Route::resource('auto', AutoController::class);
 
     Route::get('/cestino', [AutoController::class, 'trashed'])->name('auto.cestino');
     Route::get('/cestino/ripristina/{id}', [AutoController::class, 'restore'])->name('auto.restore');

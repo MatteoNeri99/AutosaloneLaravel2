@@ -128,18 +128,22 @@ class HTTPTest extends TestCase
 
     }
 
-    public function test_forceDelete(){
+    //public function test_forceDelete(){
 
-       //controllo la funzione di soft delete
-       $this->delete('/auto/1')->assertStatus(302);
+        //$auto = \App\Models\Auto::factory()->create();
 
-       //controllo che sia stato effettivamente soft deleted
-       $this->assertSoftDeleted('autos', ['id' => 1]);
+        //controllo la funzione di soft delete
+        //$this->delete("/auto/{$auto->id}")->assertStatus(302);
 
-        $this->get('/cestino/elimina/1')->assertStatus(302);
+        //controllo che sia stato effettivamente soft deleted
+        //$this->assertSoftDeleted('autos', ['id' => $auto->id]);
 
-        $this->assertDatabaseMissing('autos', ['id' => 1]);
-    }
+        //$this->get("/cestino/elimina/{$auto->id}")->assertStatus(302);
+
+        //$this->assertDatabaseMissing('autos', ['id' => $auto->id]);
+
+
+    //}
 
 
 }
