@@ -13,11 +13,14 @@ class ApiTest extends TestCase
      */
     public function test_api_controller_function(): void
     {
+
+       $auto= \App\Models\Auto::factory()->create();
+
         //controllo il funzionamento della function index e vedo se ritorna l'auto con id 1
-        $this->get('/api/auto')->assertStatus(200)->assertJsonPath('data.0.id',1);
+        $this->get('/api/auto')->assertStatus(200)->assertJsonPath('data.0.id',$auto->id);
 
         //controllo della funzione show e vedo che ritorni l'auto con id 1
-        $this->get('/api/auto/1')->assertStatus(200)->assertJson(['id'=>1]);
+        $this->get("/api/auto/{$auto->id}")->assertStatus(200)->assertJson(['id'=>$auto->id]);
 
 
 
