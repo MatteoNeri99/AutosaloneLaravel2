@@ -16,6 +16,11 @@ class ApiTest extends TestCase
         //controllo il funzionamento della function index e vedo se ritorna l'auto con id 1
         $this->get('/api/auto')->assertStatus(200)->assertJsonPath('data.0.id',1);
 
+        //controllo della funzione show e vedo che ritorni l'auto con id 1
+        $this->get('/api/auto/1')->assertStatus(200)->assertJson(['id'=>1]);
+
+
+
 
 
     }
