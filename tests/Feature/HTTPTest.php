@@ -38,7 +38,7 @@ class HTTPTest extends TestCase
             'descrizione' => 'bella',
             'status' => 'disponibile',
 
-        ])->assertRedirect('/auto');
+        ])->assertRedirect(route('auto.index'));
 
 
         //controllo se l'auto inserita e presente nel databes
@@ -75,7 +75,7 @@ class HTTPTest extends TestCase
             'carburante_id' => 2,
             'descrizione' => 'bella',
             'status' => 'disponibile',
-        ])->assertRedirect('/auto');
+        ])->assertRedirect(route('auto.index'));
 
         //controllo che i campi siano stati effettivamente modificati
         $this->assertDatabaseHas('autos', ['marca' => 'Alfa',
