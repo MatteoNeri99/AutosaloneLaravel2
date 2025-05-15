@@ -54,10 +54,7 @@ class HTTPTest extends TestCase
         //disabilitato CSRF
         $this->withoutMiddleware();
 
-        $auto = Auto::factory()->create([
-            'carburante_id' => 1,
-            'tipologia_id' => 1
-        ]);
+        $auto = Auto::factory()->create();
 
         //controllo che la function update funzioni correttamente
         $this->put("/auto/{$auto -> id}", [
@@ -103,15 +100,14 @@ class HTTPTest extends TestCase
 
     }
 
+
+
     public function test_softDelete (){
 
         //disabilitato CSRF
         $this->withoutMiddleware();
 
-        $auto = Auto::factory()->create([
-            'carburante_id' => 1,
-            'tipologia_id' => 1
-        ]);
+        $auto = Auto::factory()->create();
 
         //controllo la funzione di soft delete
         $this->delete("/auto/{$auto-> id}")->assertStatus(302);
@@ -159,27 +155,31 @@ class HTTPTest extends TestCase
         //controllo caricamento page che mostra le auto sof deleted (trashed)
         $this->get('/cestino')->assertStatus(200);
 
+
+
+    }
+
+    public function test_forceDelete(){
+
+        //disabilitato CSRF
+        $this->withoutMiddleware();
+
+        $auto = Auto::factory()->create();
+
+        //controllo la funzione di soft delete
+        $this->delete("/auto/{$auto->id}")->assertStatus(302);
+
+        //controllo che sia stato effettivamente soft deleted
+        $this->assertSoftDeleted('autos', ['id' => $auto->id]);
+
+        $this->get("/cestino/elimina/{$auto->id}")->assertStatus(302);
+
+        $this->assertDatabaseMissing('autos', ['id' => $auto->id]);
+
         //elimino tutti i record nella tabella autos
         Auto::truncate();
 
     }
-
-    //public function test_forceDelete(){
-
-        //$auto = \App\Models\Auto::factory()->create();
-
-        //controllo la funzione di soft delete
-        //$this->delete("/auto/{$auto->id}")->assertStatus(302);
-
-        //controllo che sia stato effettivamente soft deleted
-        //$this->assertSoftDeleted('autos', ['id' => $auto->id]);
-
-        //$this->get("/cestino/elimina/{$auto->id}")->assertStatus(302);
-
-        //$this->assertDatabaseMissing('autos', ['id' => $auto->id]);
-
-
-    //}
 
 
 }
