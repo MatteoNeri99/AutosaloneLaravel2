@@ -17,6 +17,9 @@ class AutoFactory extends Factory
     public function definition(): array
     {
         return [
+            'foto' => json_encode([
+                'foto/' . $this->faker->uuid . '.jpg',
+            ]),
             'anno' => $this->faker->year(),
             'marca' => $this->faker->word(),
             'modello' => $this->faker->word(),
