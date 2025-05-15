@@ -15,7 +15,7 @@ class ApiTest extends TestCase
     public function test_api_controller_function(): void
     {
         //creo un'auto per avere un id dinamico per poter controllare il funzionamento delle funzioni API
-       $auto = Auto::factory()->create();
+        $auto = Auto::factory()->create();
 
         //controllo il funzionamento della function index
         $this->get('/api/auto')->assertStatus(200)->assertJsonPath('data.0.id',$auto->id);
